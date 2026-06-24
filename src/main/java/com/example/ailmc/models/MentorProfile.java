@@ -2,7 +2,6 @@ package com.example.ailmc.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.catalina.User;
 
 import java.util.List;
 
@@ -24,6 +23,10 @@ public class MentorProfile {
 
     private String collegeName;
     private String techStack;
+
+    private String city;
+    private String preferredDomains;
+    private String linkedinUrl;
 
     @OneToMany(mappedBy = "mentor")
     private List<Cohort> cohorts;

@@ -23,10 +23,16 @@ public class Cohort {
     @Enumerated(EnumType.STRING)
     private CohortSchedule scheduleOptions; // 4, 6, or 10 weeks [cite: 199]
 
+    @Builder.Default
+    private Integer maxSize = 12;
+
+    @Enumerated(EnumType.STRING)
+    private CohortStatus status; // OPEN, CLOSED, ACTIVE, COMPLETED
+
     @ManyToOne
     @JoinColumn(name = "mentor_id", nullable = false)
     private MentorProfile mentor;
 
-    @OneToMany(mappedBy = "cohort")
+    @OneToMany(mappedBy = "cohort", cascade = CascadeType.ALL)
     private List<MenteeProfile> mentees;
 }

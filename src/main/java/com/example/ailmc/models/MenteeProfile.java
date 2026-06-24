@@ -2,7 +2,6 @@ package com.example.ailmc.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.catalina.User;
 
 @Entity
 @Table(name = "ailmc_mentees")
@@ -20,8 +19,11 @@ public class MenteeProfile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private String targetSkill;
     private String currentJobFunction;
+    private String occupation;
+    private String city;
+    private String targetSkill;
+    private String aiGoal;
 
     @ManyToOne
     @JoinColumn(name = "cohort_id")
