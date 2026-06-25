@@ -23,7 +23,7 @@ public class AuthService {
     private final MenteeProfileRepository menteeRepo;
     private final PasswordEncoder      passwordEncoder;
     private final JwtUtil              jwtUtil;
-//private final EmailService         emailService;
+    private final EmailService         emailService;
 
     @Transactional
     public AuthResponse register(RegisterRequest req) {
@@ -47,7 +47,7 @@ public class AuthService {
                     .techStack(req.getTechStack())
                     .build();
             mentorRepo.save(mentor);
-            //emailService.sendMentorWelcomeEmail(user.getEmail(), req.getName());
+            emailService.sendMentorWelcomeEmail(user.getEmail(), req.getName());
 
         } else if (req.getRole() == Role.MENTEE) {
             MenteeProfile mentee = MenteeProfile.builder()
@@ -56,7 +56,7 @@ public class AuthService {
                     .currentJobFunction(req.getCurrentJobFunction())
                     .build();
             menteeRepo.save(mentee);
-            //emailService.sendMenteeWelcomeEmail(user.getEmail(), req.getName());
+            emailService.sendMenteeWelcomeEmail(user.getEmail(), req.getName());
         }
         // SUPER_ADMIN: no profile needed
 

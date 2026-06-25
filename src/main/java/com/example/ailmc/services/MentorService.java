@@ -4,7 +4,6 @@ import com.example.ailmc.dto.CreateCohortRequest;
 import com.example.ailmc.dto.CohortSummaryResponse;
 import com.example.ailmc.dto.MentorProfileResponse;
 import com.example.ailmc.dto.MenteeProfileResponse;
-import com.example.ailmc.exceptions.BadRequestException;
 import com.example.ailmc.exceptions.ResourceNotFoundException;
 import com.example.ailmc.exceptions.UnauthorizedException;
 import com.example.ailmc.models.*;

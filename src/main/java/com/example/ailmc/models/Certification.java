@@ -30,4 +30,5 @@ public class Certification {
     private PaymentStatus feeStatus;
 
     private LocalDateTime issuedAt;
+    private LocalDateTime paidAt;
 }

@@ -17,4 +17,5 @@ public class CertificationResponse {
     private Double processingFeeAmount;
     private PaymentStatus feeStatus;
     private LocalDateTime issuedAt;
+    private LocalDateTime paidAt;
 }
