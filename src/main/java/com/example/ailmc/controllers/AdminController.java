@@ -1,7 +1,6 @@
 package com.example.ailmc.controllers;
 
 import com.example.ailmc.dto.*;
-import com.example.ailmc.dto.response.*;
 import com.example.ailmc.services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

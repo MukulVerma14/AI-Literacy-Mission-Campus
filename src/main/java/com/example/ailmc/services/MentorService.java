@@ -27,6 +27,7 @@ public class MentorService {
     private final MenteeProfileRepository menteeRepo;
     private final CohortRepository        cohortRepo;
     private final ProgressLogRepository   progressRepo;
+    private final CertificationRepository certRepo;
 
     // ── Profile ───────────────────────────────────────────────────────────────
 
@@ -131,6 +132,10 @@ public class MentorService {
 
     private MenteeProfileResponse mapToMenteeResponse(MenteeProfile mp) {
         Integer hours = progressRepo.sumHoursCompletedByMenteeId(mp.getId());
+        boolean certIssued = certRepo.existsByMenteeId(mp.getId());
+        Integer mcHours = progressRepo.sumHoursCompletedByMenteeIdAndTrackType(mp.getId(), TrackType.MASTER_CLASS);
+        Integer spHours = progressRepo.sumHoursCompletedByMenteeIdAndTrackType(mp.getId(), TrackType.SELF_PRACTICE);
+        Integer cpHours = progressRepo.sumHoursCompletedByMenteeIdAndTrackType(mp.getId(), TrackType.CAPSTONE);
         return MenteeProfileResponse.builder()
                 .id(mp.getId())
                 .userId(mp.getUser().getId())
@@ -142,6 +147,10 @@ public class MentorService {
                 .cohortCity(mp.getCohort() != null ? mp.getCohort().getCity() : null)
                 .cohortSchedule(mp.getCohort() != null ? mp.getCohort().getScheduleOptions().name() : null)
                 .totalHoursCompleted(hours != null ? hours : 0)
+                .certificationIssued(certIssued)
+                .masterClassHours(mcHours != null ? mcHours : 0)
+                .selfPracticeHours(spHours != null ? spHours : 0)
+                .capstoneHours(cpHours != null ? cpHours : 0)
                 .build();
     }
 }

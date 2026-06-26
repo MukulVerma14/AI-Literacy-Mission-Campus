@@ -19,6 +19,11 @@ public class MenteeProfileResponse {
     // Progress summary
     private Integer totalHoursCompleted;
     private boolean certificationIssued;
+
+    // Track splits
+    private Integer masterClassHours;
+    private Integer selfPracticeHours;
+    private Integer capstoneHours;
 }
 
 

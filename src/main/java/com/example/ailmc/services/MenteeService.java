@@ -170,6 +170,9 @@ public class MenteeService {
     private MenteeProfileResponse buildMenteeResponse(MenteeProfile mp) {
         Integer hours = orZero(progressRepo.sumHoursCompletedByMenteeId(mp.getId()));
         boolean certIssued = certRepo.existsByMenteeId(mp.getId());
+        Integer mcHours = orZero(progressRepo.sumHoursCompletedByMenteeIdAndTrackType(mp.getId(), TrackType.MASTER_CLASS));
+        Integer spHours = orZero(progressRepo.sumHoursCompletedByMenteeIdAndTrackType(mp.getId(), TrackType.SELF_PRACTICE));
+        Integer cpHours = orZero(progressRepo.sumHoursCompletedByMenteeIdAndTrackType(mp.getId(), TrackType.CAPSTONE));
         return MenteeProfileResponse.builder()
                 .id(mp.getId())
                 .userId(mp.getUser().getId())
@@ -182,6 +185,9 @@ public class MenteeService {
                 .cohortSchedule(mp.getCohort() != null ? mp.getCohort().getScheduleOptions().name() : null)
                 .totalHoursCompleted(hours)
                 .certificationIssued(certIssued)
+                .masterClassHours(mcHours)
+                .selfPracticeHours(spHours)
+                .capstoneHours(cpHours)
                 .build();
     }
 
