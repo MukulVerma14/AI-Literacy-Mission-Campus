@@ -22,6 +22,8 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
     long countByMenteeIdAndIsPresent(Long menteeId, Boolean isPresent);
 
+    long countBySessionIdAndIsPresent(Long sessionId, Boolean isPresent);
+
     // Sessions attended in a specific cohort
     @Query("SELECT COUNT(a) FROM Attendance a " +
            "WHERE a.mentee.id = :menteeId " +

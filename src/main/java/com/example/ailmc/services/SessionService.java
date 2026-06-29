@@ -112,9 +112,9 @@ public class SessionService {
     }
 
     private SessionResponse mapToResponse(TrainingSession s) {
-        long present = attendanceRepo.countByMenteeIdAndIsPresent(
+        long present = attendanceRepo.countBySessionIdAndIsPresent(
                 s.getId(), true);
-        long absent  = attendanceRepo.countByMenteeIdAndIsPresent(
+        long absent  = attendanceRepo.countBySessionIdAndIsPresent(
                 s.getId(), false);
         return SessionResponse.builder()
                 .id(s.getId())

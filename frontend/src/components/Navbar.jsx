@@ -85,6 +85,12 @@ const Navbar = () => {
                     <Link to="/mentee/tracker" className={navLinkClass('/mentee/tracker')}>
                       Learning Tracker
                     </Link>
+                    <Link to="/mentee/attendance" className={navLinkClass('/mentee/attendance')}>
+                      Attendance
+                    </Link>
+                    <Link to="/mentee/assessments" className={navLinkClass('/mentee/assessments')}>
+                      Assessments
+                    </Link>
                     <Link to="/mentee/cert" className={navLinkClass('/mentee/cert')}>
                       My Certificate
                     </Link>
@@ -212,6 +218,20 @@ const Navbar = () => {
                       className={mobileNavLinkClass('/mentee/tracker')}
                     >
                       Learning Tracker
+                    </Link>
+                    <Link
+                      to="/mentee/attendance"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={mobileNavLinkClass('/mentee/attendance')}
+                    >
+                      Attendance
+                    </Link>
+                    <Link
+                      to="/mentee/assessments"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={mobileNavLinkClass('/mentee/assessments')}
+                    >
+                      Assessments
                     </Link>
                     <Link
                       to="/mentee/cert"

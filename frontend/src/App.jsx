@@ -15,12 +15,16 @@ import Register from './pages/Register';
 // Mentor Pages
 import MentorDashboard from './pages/mentor/MentorDashboard';
 import CohortDetail from './pages/mentor/CohortDetail';
+import SessionsPage from './pages/mentor/SessionsPage';
+import SessionDetailPage from './pages/mentor/SessionDetailPage';
 
 // Mentee Pages
 import MenteeDashboard from './pages/mentee/MenteeDashboard';
 import BrowseCohorts from './pages/mentee/BrowseCohorts';
 import LearningTracker from './pages/mentee/LearningTracker';
 import CertPage from './pages/mentee/CertPage';
+import MyAttendancePage from './pages/mentee/MyAttendancePage';
+import MyAssessmentsPage from './pages/mentee/MyAssessmentsPage';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -68,6 +72,22 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="/mentor/cohorts/:cohortId/sessions"
+                element={
+                  <ProtectedRoute allowedRole="MENTOR">
+                    <SessionsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/mentor/cohorts/:cohortId/sessions/:id"
+                element={
+                  <ProtectedRoute allowedRole="MENTOR">
+                    <SessionDetailPage />
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Mentee Routes */}
               <Route
@@ -99,6 +119,22 @@ function App() {
                 element={
                   <ProtectedRoute allowedRole="MENTEE">
                     <CertPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/mentee/attendance"
+                element={
+                  <ProtectedRoute allowedRole="MENTEE">
+                    <MyAttendancePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/mentee/assessments"
+                element={
+                  <ProtectedRoute allowedRole="MENTEE">
+                    <MyAssessmentsPage />
                   </ProtectedRoute>
                 }
               />

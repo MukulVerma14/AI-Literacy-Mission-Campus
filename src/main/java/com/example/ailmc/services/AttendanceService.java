@@ -115,7 +115,17 @@ public class AttendanceService {
                     "Mentee not found: " + menteeEmail));
 
         if (mentee.getCohort() == null) {
-            throw new BadRequestException("You have not joined a cohort yet");
+            return AttendanceSummaryResponse.builder()
+                    .menteeId(mentee.getId())
+                    .menteeEmail(menteeEmail)
+                    .cohortId(null)
+                    .cohortName(null)
+                    .totalSessions(0)
+                    .sessionsAttended(0)
+                    .sessionsAbsent(0)
+                    .attendancePercentage(0.0)
+                    .records(List.of())
+                    .build();
         }
 
         Long cohortId  = mentee.getCohort().getId();

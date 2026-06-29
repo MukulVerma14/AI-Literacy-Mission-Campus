@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getMentorCohorts, getCohortMembers, getCohortProgress } from '../../api/mentor';
 import { issueCertificate } from '../../api/cert';
+import { getCohortSessions } from '../../api/session';
 import { showToast } from '../../components/Toast';
 import Spinner from '../../components/Spinner';
 import Modal from '../../components/Modal';
@@ -20,6 +21,7 @@ const CohortDetail = () => {
   const [cohort, setCohort] = useState(null);
   const [members, setMembers] = useState([]);
   const [progress, setProgress] = useState([]);
+  const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('members'); // 'members' | 'progress'
 
@@ -46,6 +48,9 @@ const CohortDetail = () => {
 
       const progressData = await getCohortProgress(cohortId);
       setProgress(progressData);
+
+      const sessionsData = await getCohortSessions(cohortId);
+      setSessions(sessionsData);
     } catch (err) {
       console.error(err);
     } finally {
@@ -186,11 +191,21 @@ const CohortDetail = () => {
             >
               Progress Tracker
             </button>
+            <button
+              onClick={() => setActiveTab('sessions')}
+              className={`py-4 px-1 border-b-2 font-bold text-sm transition-all focus:outline-none ${
+                activeTab === 'sessions'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+              }`}
+            >
+              Sessions ({sessions.length})
+            </button>
           </nav>
         </div>
 
         {/* Tab Panels */}
-        {activeTab === 'members' ? (
+        {activeTab === 'members' && (
           <div className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-slate-200">
@@ -269,8 +284,9 @@ const CohortDetail = () => {
               </table>
             </div>
           </div>
-        ) : (
-          /* Progress Tab */
+        )}
+
+        {activeTab === 'progress' && (
           <div className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-slate-200">
@@ -345,6 +361,73 @@ const CohortDetail = () => {
                   )}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'sessions' && (
+          <div className="bg-white rounded-xl shadow-md p-6 border border-slate-100 space-y-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Scheduled Sessions</p>
+                <p className="text-2xl font-black text-slate-800 mt-1">
+                  {sessions.length} <span className="text-sm font-semibold text-slate-505">sessions scheduled out of {cohort.scheduleOptions === 'SIX_WEEKS' ? 18 : 20}</span>
+                </p>
+              </div>
+              <Link
+                to={`/mentor/cohorts/${cohortId}/sessions`}
+                className="px-4 py-2 bg-primary text-white font-bold text-sm rounded-lg hover:bg-blue-600 shadow-sm transition-colors text-center"
+              >
+                Manage Sessions &rarr;
+              </Link>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200/50">
+              <div
+                className="h-full bg-primary rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${Math.min((sessions.length / (cohort.scheduleOptions === 'SIX_WEEKS' ? 18 : 20)) * 100, 100)}%` }}
+              />
+            </div>
+
+            {/* Mini Session List */}
+            <div className="border-t border-slate-100 pt-5">
+              <h4 className="text-sm font-bold text-slate-800 mb-3">Session Log Preview</h4>
+              {sessions.length === 0 ? (
+                <p className="text-xs text-slate-400 italic">No sessions scheduled yet.</p>
+              ) : (
+                <div className="overflow-x-auto border border-slate-150 rounded-lg">
+                  <table className="min-w-full divide-y divide-slate-100">
+                    <thead className="bg-slate-50">
+                      <tr>
+                        <th scope="col" className="px-4 py-2.5 text-left text-xs font-bold text-slate-500 uppercase">Day</th>
+                        <th scope="col" className="px-4 py-2.5 text-left text-xs font-bold text-slate-500 uppercase">Topic</th>
+                        <th scope="col" className="px-4 py-2.5 text-left text-xs font-bold text-slate-500 uppercase">Mode</th>
+                        <th scope="col" className="px-4 py-2.5 text-left text-xs font-bold text-slate-500 uppercase">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 bg-white">
+                      {sessions.slice(0, 5).map((s) => (
+                        <tr key={s.id} className="hover:bg-slate-50/50">
+                          <td className="whitespace-nowrap px-4 py-2 text-xs font-semibold text-slate-800">Day {s.dayNumber}</td>
+                          <td className="whitespace-nowrap px-4 py-2 text-xs text-slate-600 font-medium">{s.topic}</td>
+                          <td className="whitespace-nowrap px-4 py-2 text-xs font-bold text-slate-500 uppercase">{s.mode}</td>
+                          <td className="whitespace-nowrap px-4 py-2 text-xs text-slate-500">
+                            {new Date(s.scheduledAt).toLocaleDateString(undefined, { month: 'short', day: '2-digit' })}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {sessions.length > 5 && (
+                    <div className="p-2.5 bg-slate-50 border-t border-slate-100 text-center">
+                      <Link to={`/mentor/cohorts/${cohortId}/sessions`} className="text-xs font-bold text-primary hover:underline">
+                        View all {sessions.length} sessions...
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}

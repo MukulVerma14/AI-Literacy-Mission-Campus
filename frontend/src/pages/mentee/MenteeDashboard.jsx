@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getMenteeProfile, getLearningJourney } from '../../api/mentee';
+import { getMyAttendance } from '../../api/attendance';
+import { getMyAssessments } from '../../api/assessment';
 import Spinner from '../../components/Spinner';
 import ProgressBar from '../../components/ProgressBar';
 
@@ -13,6 +15,8 @@ const SCHEDULE_DISPLAY = {
 const MenteeDashboard = () => {
   const [profile, setProfile] = useState(null);
   const [journey, setJourney] = useState(null);
+  const [attendanceSummary, setAttendanceSummary] = useState(null);
+  const [assessmentSummary, setAssessmentSummary] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
@@ -21,6 +25,13 @@ const MenteeDashboard = () => {
       setProfile(profileData);
       const journeyData = await getLearningJourney();
       setJourney(journeyData);
+
+      if (profileData && profileData.cohortId) {
+        const attData = await getMyAttendance();
+        setAttendanceSummary(attData);
+        const assData = await getMyAssessments();
+        setAssessmentSummary(assData);
+      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -154,7 +165,7 @@ const MenteeDashboard = () => {
                 <div>
                   <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Progress</p>
                   <p className="text-3xl font-extrabold text-slate-900 mt-1">
-                    {journey?.totalHours || 0} <span className="text-sm font-semibold text-slate-500">/ 70 hrs completed</span>
+                    {journey?.totalHours || 0} <span className="text-sm font-semibold text-slate-505">/ 70 hrs completed</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
@@ -171,6 +182,79 @@ const MenteeDashboard = () => {
                 </div>
               </div>
             </div>
+
+            {/* New summary cards below progress bars */}
+            {profile?.cohortId && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {/* Card 1 - Attendance */}
+                <div className="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col justify-between h-40">
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Attendance</h4>
+                    <div className="mt-3 flex items-baseline gap-2">
+                      <span className="text-2xl font-black text-slate-800">
+                        {attendanceSummary ? `${attendanceSummary.sessionsAttended}/${attendanceSummary.totalSessions}` : '0/0'}
+                      </span>
+                      <span className="text-xs font-semibold text-slate-500">sessions</span>
+                    </div>
+                    {attendanceSummary && (
+                      <p className={`text-2xl font-extrabold mt-1 ${
+                        attendanceSummary.attendancePercentage >= 75
+                          ? 'text-green-600'
+                          : attendanceSummary.attendancePercentage >= 50
+                          ? 'text-amber-600'
+                          : 'text-rose-605 font-bold'
+                      }`}>
+                        {attendanceSummary.attendancePercentage.toFixed(1)}%
+                      </p>
+                    )}
+                  </div>
+                  <Link
+                    to="/mentee/attendance"
+                    className="text-xs font-bold text-primary hover:text-blue-600 flex items-center gap-1"
+                  >
+                    View Details &rarr;
+                  </Link>
+                </div>
+
+                {/* Card 2 - Assessments */}
+                <div className="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col justify-between h-40">
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">My Grades</h4>
+                    <div className="mt-3 flex items-center gap-4">
+                      <span className={`inline-flex items-center justify-center w-12 h-12 rounded-full border border-slate-200 text-xl font-black ${
+                        assessmentSummary?.overallGrade === 'A'
+                          ? 'text-green-600 bg-green-50 border-green-200'
+                          : assessmentSummary?.overallGrade === 'B'
+                          ? 'text-blue-605 bg-blue-50 border-blue-200'
+                          : assessmentSummary?.overallGrade === 'C'
+                          ? 'text-amber-600 bg-amber-50 border-amber-200'
+                          : assessmentSummary?.overallGrade === 'D'
+                          ? 'text-orange-600 bg-orange-50 border-orange-200'
+                          : assessmentSummary?.overallGrade === 'F'
+                          ? 'text-rose-600 bg-rose-50 border-rose-200'
+                          : 'text-slate-600 bg-slate-50 border-slate-200'
+                      }`}>
+                        {assessmentSummary?.overallGrade || '—'}
+                      </span>
+                      <div>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Average Score</p>
+                        <p className="text-base font-bold text-slate-800">
+                          {assessmentSummary && assessmentSummary.averageScore !== null
+                            ? `${assessmentSummary.averageScore.toFixed(1)}%`
+                            : '—'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <Link
+                    to="/mentee/assessments"
+                    className="text-xs font-bold text-primary hover:text-blue-600 flex items-center gap-1"
+                  >
+                    View Details &rarr;
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
 
         </div>
