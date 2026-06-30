@@ -43,8 +43,11 @@ public class AuthService {
         if (req.getRole() == Role.MENTOR) {
             MentorProfile mentor = MentorProfile.builder()
                     .user(user)
+                    .city(req.getCity())
                     .collegeName(req.getCollegeName())
                     .techStack(req.getTechStack())
+                    .linkedinUrl(req.getLinkedinUrl())
+                    .preferredDomains(req.getPreferredDomains())
                     .build();
             mentorRepo.save(mentor);
             emailService.sendMentorWelcomeEmail(user.getEmail(), req.getName());
@@ -52,8 +55,11 @@ public class AuthService {
         } else if (req.getRole() == Role.MENTEE) {
             MenteeProfile mentee = MenteeProfile.builder()
                     .user(user)
+                    .city(req.getCity())
                     .targetSkill(req.getTargetSkill())
                     .currentJobFunction(req.getCurrentJobFunction())
+                    .occupation(req.getOccupation())
+                    .aiGoal(req.getAiGoal())
                     .build();
             menteeRepo.save(mentee);
             emailService.sendMenteeWelcomeEmail(user.getEmail(), req.getName());

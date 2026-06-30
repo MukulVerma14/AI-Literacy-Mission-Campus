@@ -22,6 +22,11 @@ const Register = () => {
   // Mentee specific fields
   const [targetSkill, setTargetSkill] = useState('');
   const [currentJobFunction, setCurrentJobFunction] = useState('');
+  const [city, setCity] = useState('');
+  const [linkedinUrl, setLinkedinUrl] = useState('');
+  const [preferredDomains, setPreferredDomains] = useState('');
+  const [occupation, setOccupation] = useState('');
+  const [aiGoal, setAiGoal] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -40,7 +45,7 @@ const Register = () => {
     else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Please provide a valid email';
     if (!password) newErrors.password = 'Password is required';
     else if (password.length < 6) newErrors.password = 'Password must be at least 6 characters';
-
+    if (!city) newErrors.city = 'City is required';
     if (role === 'MENTOR') {
       if (!collegeName) newErrors.collegeName = 'College name is required';
       if (!techStack) newErrors.techStack = 'Tech stack is required';
@@ -63,7 +68,10 @@ const Register = () => {
       email,
       password,
       role,
-      ...(role === 'MENTOR' ? { collegeName, techStack } : { targetSkill, currentJobFunction }),
+      city,
+      ...(role === 'MENTOR'
+          ? { collegeName, techStack, linkedinUrl, preferredDomains }
+          : { targetSkill, currentJobFunction, occupation, aiGoal }),
     };
 
     try {
@@ -207,7 +215,25 @@ const Register = () => {
               />
               {errors.password && <p className="mt-1 text-xs text-danger font-medium">{errors.password}</p>}
             </div>
-
+            <div>
+              <label htmlFor="city" className="block text-sm font-medium text-slate-700 mb-1">
+                  City
+              </label>
+              <input
+                  id="city"
+                  type="text"
+                  className={`appearance-none rounded-lg relative block w-full px-3 py-2 border ${
+                      errors.city ? 'border-danger' : 'border-slate-300'
+                  } placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm`}
+                  placeholder="Mumbai, Pune, Delhi, etc."
+                  value={city}
+                  onChange={(e) => {
+                      setCity(e.target.value);
+                      setErrors((prev) => ({ ...prev, city: null }));
+                  }}
+              />
+              {errors.city && <p className="mt-1 text-xs text-danger font-medium">{errors.city}</p>}
+            </div>
             {/* MENTOR specific fields */}
             {role === 'MENTOR' && (
               <>
@@ -249,6 +275,34 @@ const Register = () => {
                     }}
                   />
                   {errors.techStack && <p className="mt-1 text-xs text-danger font-medium">{errors.techStack}</p>}
+                </div>
+
+                <div>
+                  <label htmlFor="linkedin" className="block text-sm font-medium text-slate-700 mb-1">
+                      LinkedIn URL (optional)
+                  </label>
+                  <input
+                      id="linkedin"
+                      type="text"
+                      className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                      placeholder="linkedin.com/in/yourname"
+                      value={linkedinUrl}
+                      onChange={(e) => setLinkedinUrl(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="domains" className="block text-sm font-medium text-slate-700 mb-1">
+                      Preferred Domains (optional)
+                  </label>
+                  <input
+                      id="domains"
+                      type="text"
+                      className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                      placeholder="NLP, Computer Vision, Generative AI"
+                      value={preferredDomains}
+                      onChange={(e) => setPreferredDomains(e.target.value)}
+                  />
                 </div>
               </>
             )}
@@ -294,6 +348,34 @@ const Register = () => {
                     }}
                   />
                   {errors.currentJobFunction && <p className="mt-1 text-xs text-danger font-medium">{errors.currentJobFunction}</p>}
+                </div>
+
+                <div>
+                  <label htmlFor="occupation" className="block text-sm font-medium text-slate-700 mb-1">
+                      Occupation
+                  </label>
+                  <input
+                      id="occupation"
+                      type="text"
+                      className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                      placeholder="Student, Marketing Exec, Designer, Founder..."
+                      value={occupation}
+                      onChange={(e) => setOccupation(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="aiGoal" className="block text-sm font-medium text-slate-700 mb-1">
+                      What do you want to use AI for? (optional)
+                  </label>
+                  <textarea
+                      id="aiGoal"
+                      rows={2}
+                      className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                      placeholder="e.g. Automate my content writing, analyze sales data..."
+                      value={aiGoal}
+                      onChange={(e) => setAiGoal(e.target.value)}
+                  />
                 </div>
               </>
             )}

@@ -19,15 +19,21 @@ public class RegisterRequest {
     @NotNull(message = "Role is required (MENTOR / MENTEE)")
     private Role role;
 
-    // Common profile field
     @NotBlank(message = "Name is required")
     private String name;
+
+    @NotBlank(message = "City is required")
+    private String city;   // ← common to both roles now
 
     // ── MENTOR-only fields ─────────────────────────
     private String collegeName;
     private String techStack;
+    private String linkedinUrl;
+    private String preferredDomains;
 
     // ── MENTEE-only fields ─────────────────────────
     private String targetSkill;
     private String currentJobFunction;
+    private String occupation;     // e.g. "Marketing Manager", "Student", "Freelancer"
+    private String aiGoal;         // e.g. "Want to automate my content workflow"
 }
