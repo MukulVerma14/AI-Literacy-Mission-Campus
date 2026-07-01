@@ -34,6 +34,9 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.13.0'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.flywaydb:flyway-mysql:10.17.3'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.springframework.boot:spring-boot-starter-flyway'
 }
 
 tasks.named('test') {
