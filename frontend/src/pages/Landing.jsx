@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import millionmindsLogo from '../assets/millionminds-logo.png';
 
 const Landing = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, email, message } = formData;
+    const mailtoUrl = `mailto:info@millionminds.in?subject=${encodeURIComponent(`AILMC Inquiry from ${name}`)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+    window.location.href = mailtoUrl;
+  };
   const tracks = [
     {
       title: 'MasterClass',
@@ -118,6 +127,429 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      {/* About The Mission Section */}
+      <section id="about-mission" className="bg-white py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column (text) */}
+            <div>
+              <span className="text-xs font-bold tracking-widest text-primary uppercase mb-2 block">
+                OUR MISSION
+              </span>
+              <h2 className="text-3xl font-bold text-slate-900 mb-6">
+                Training One Million GenZ Students in AI
+              </h2>
+              <div className="space-y-4 text-slate-600 leading-relaxed text-sm sm:text-base">
+                <p>
+                  The early adoption of AI skills enables individuals to explore 
+                  AI-driven new jobs while remaining relevant in their existing 
+                  vocations. As an emerging and fast-growing economy, India needs 
+                  AI training at a much larger scale — all pervasive, wherever 
+                  the impact of AI is going to be greater.
+                </p>
+                <p>
+                  Our vision is to train One Million GenZ students and young 
+                  working professionals across India in the Fundamentals of AI 
+                  and the working knowledge of Gen AI tools for real-life 
+                  productivity enhancement — free of cost.
+                </p>
+                <p>
+                  The initial pilot has 50 mentors training 500 individuals. 
+                  Over 3 years, we will scale to 5,000 mentors covering 100+ 
+                  cities, with capacity to train 2.5 lakh mentees per annum.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column (stats grid) */}
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+              <div className="bg-slate-50 rounded-xl p-6 text-center border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">1 Million+</div>
+                <div className="text-xs sm:text-sm text-slate-500 font-medium">Target Learners</div>
+              </div>
+              <div className="bg-slate-50 rounded-xl p-6 text-center border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">5,000+</div>
+                <div className="text-xs sm:text-sm text-slate-500 font-medium">Mentors by Year 3</div>
+              </div>
+              <div className="bg-slate-50 rounded-xl p-6 text-center border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">100+</div>
+                <div className="text-xs sm:text-sm text-slate-500 font-medium">Cities Covered</div>
+              </div>
+              <div className="bg-slate-50 rounded-xl p-6 text-center border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">70 Hours</div>
+                <div className="text-xs sm:text-sm text-slate-500 font-medium">Per Programme</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="bg-slate-50 py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-xs font-bold tracking-widest text-primary uppercase mb-2 block">
+              PROCESS
+            </span>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+              How It Works
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              A structured, mentor-led journey from AI novice to AI native.
+            </p>
+          </div>
+
+          <div className="flex md:grid md:grid-cols-4 gap-8 overflow-x-auto md:overflow-x-visible pb-6 md:pb-0 snap-x snap-mandatory scrollbar-thin">
+            {/* Step 1 */}
+            <div className="flex-shrink-0 w-80 md:w-auto snap-center bg-white rounded-2xl shadow-sm p-6 border border-slate-100 relative flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm mb-4">
+                01
+              </div>
+              <span className="text-3xl mb-3" role="img" aria-label="Register">📝</span>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Register</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Sign up as a Mentee. Share your background, current role, and what you want to achieve with AI.
+              </p>
+              <div className="hidden md:flex absolute top-16 -right-6 w-12 h-12 items-center justify-center text-slate-300 text-xl font-bold z-10">
+                →
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="flex-shrink-0 w-80 md:w-auto snap-center bg-white rounded-2xl shadow-sm p-6 border border-slate-100 relative flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm mb-4">
+                02
+              </div>
+              <span className="text-3xl mb-3" role="img" aria-label="Join a Cohort">🤝</span>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Join a Cohort</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Browse mentor-led cohorts in your city. Groups of 10–12 mentees for focused, personalised learning.
+              </p>
+              <div className="hidden md:flex absolute top-16 -right-6 w-12 h-12 items-center justify-center text-slate-300 text-xl font-bold z-10">
+                →
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex-shrink-0 w-80 md:w-auto snap-center bg-white rounded-2xl shadow-sm p-6 border border-slate-100 relative flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm mb-4">
+                03
+              </div>
+              <span className="text-3xl mb-3" role="img" aria-label="Complete 70 Hours">🧠</span>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Complete 70 Hours</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                30 hrs MasterClass + 30 hrs Self-Practice + 10 hrs Capstone project. Track every hour in your dashboard.
+              </p>
+              <div className="hidden md:flex absolute top-16 -right-6 w-12 h-12 items-center justify-center text-slate-300 text-xl font-bold z-10">
+                →
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="flex-shrink-0 w-80 md:w-auto snap-center bg-white rounded-2xl shadow-sm p-6 border border-slate-100 relative flex flex-col items-center text-center">
+              <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm mb-4">
+                04
+              </div>
+              <span className="text-3xl mb-3" role="img" aria-label="Get Certified">🏆</span>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Get Certified</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Earn your AILMC certificate — graded, verified, and powered by Millionminds. Your proof of becoming AI-native.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Programme Content Section */}
+      <section className="bg-white py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-xs font-bold tracking-widest text-primary uppercase mb-2 block">
+              CURRICULUM
+            </span>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+              What You Will Learn
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              A hands-on curriculum built for the real AI world.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">⚡</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Prompt Engineering</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Master the art of communicating with AI. Learn to craft prompts that get real, production-grade results.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">🤖</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">AI Agents & Applications</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Build and deploy AI agents. Understand how autonomous systems work and apply them to real tasks.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">🐍</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Python & Data Science</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Fundamentals of Python, ML, and data analysis — the building blocks of every AI application.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">💻</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Vibe Coding & No-Code AI</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Build AI-powered apps without deep coding knowledge. Use no-code and low-code tools for rapid prototyping.
+              </p>
+            </div>
+
+            {/* Card 5 */}
+            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">🧬</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">LLMs & GenAI Tools</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Understand Large Language Models. Get hands-on with ChatGPT, Gemini, Claude, and emerging AI tools.
+              </p>
+            </div>
+
+            {/* Card 6 */}
+            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3">🛡️</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">AI Ethics & Digital Safety</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Navigate AI responsibly. Learn AI ethics, data privacy, and digital security in the age of GenAI.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Millionminds Section */}
+      <section className="bg-slate-900 text-white py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="bg-white rounded-xl px-4 py-2 inline-block mb-6 shadow-sm">
+            <img src={millionmindsLogo} className="h-10 w-auto" alt="Millionminds Logo" />
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-6">About Millionminds</h2>
+          <div className="space-y-6 text-slate-300 leading-relaxed text-sm sm:text-base">
+            <p>
+              Millionminds is a skilling platform dedicated to fostering 
+              tech upskilling, innovation, entrepreneurship, and employability 
+              amongst campus students across India. We bridge the gap between 
+              what employers seek from campus freshers and what students 
+              actually learn — creating real-world readiness through 
+              hands-on experiences.
+            </p>
+            <p>
+              Our programmes span AI literacy, career upskilling, job 
+              placements, internships, and industry R&D projects — all 
+              delivered in partnership with domain experts, mentors, and 
+              campus institutions.
+            </p>
+            <p className="text-primary font-semibold italic text-lg mt-4 block">
+              Skilling Platform: Harnessing Unexplored Talent. A Change Agent.
+            </p>
+          </div>
+          <a
+            href="https://www.millionminds.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors inline-block shadow-md hover:shadow-primary/20"
+          >
+            Visit Millionminds &rarr;
+          </a>
+        </div>
+      </section>
+
+      {/* Contact Us Section */}
+      <section className="bg-white py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-xs font-bold tracking-widest text-primary uppercase mb-2 block">
+              CONTACT
+            </span>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+              Get In Touch
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              Have questions about AILMC? We'd love to hear from you.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            {/* Left Column (Contact details) */}
+            <div className="flex flex-col gap-6 justify-center">
+              {/* Card 1 */}
+              <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                <span className="text-2xl animate-pulse" role="img" aria-label="Website">🌐</span>
+                <div className="flex flex-col">
+                  <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Website</span>
+                  <a
+                    href="https://www.millionminds.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-medium text-sm sm:text-base"
+                  >
+                    www.millionminds.in
+                  </a>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                <span className="text-2xl animate-pulse" role="img" aria-label="Email">📧</span>
+                <div className="flex flex-col">
+                  <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Email</span>
+                  <a
+                    href="mailto:info@millionminds.in"
+                    className="text-primary hover:underline font-medium text-sm sm:text-base"
+                  >
+                    info@millionminds.in
+                  </a>
+                </div>
+              </div>
+
+              {/* Card 3 */}
+              <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                <span className="text-2xl animate-pulse" role="img" aria-label="Platform">📍</span>
+                <div className="flex flex-col">
+                  <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Platform</span>
+                  <span className="text-slate-900 font-medium text-sm sm:text-base">
+                    AI Literacy Mission @ Campus
+                  </span>
+                  <span className="text-xs text-slate-500 mt-0.5">
+                    Powered by Millionminds UpSkill Academy
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column (Form) */}
+            <form onSubmit={handleSubmit} className="bg-slate-50 p-8 rounded-2xl border border-slate-100 flex flex-col gap-4 shadow-sm">
+              <div>
+                <label htmlFor="fullName" className="sr-only">Full Name</label>
+                <input
+                  id="fullName"
+                  type="text"
+                  placeholder="Full Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 text-sm"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="emailAddress" className="sr-only">Email Address</label>
+                <input
+                  id="emailAddress"
+                  type="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 text-sm"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="sr-only">Your Message</label>
+                <textarea
+                  id="message"
+                  placeholder="Your Message"
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 text-sm resize-none"
+                  required
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-primary text-white rounded-lg py-3 font-semibold hover:bg-blue-600 transition-colors shadow-md text-sm mt-2"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Section */}
+      <footer className="bg-slate-900 text-slate-400 pt-16 pb-8 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          {/* Column 1 */}
+          <div>
+            <div className="bg-white rounded-lg px-2 py-1 inline-block mb-3">
+              <img src={millionmindsLogo} alt="Millionminds" className="h-8 w-auto" />
+            </div>
+            <p className="text-slate-300 font-semibold text-sm">AI Literacy Mission @ Campus</p>
+            <p className="text-slate-500 text-xs mt-2">&copy; 2026 Millionminds. All rights reserved.</p>
+          </div>
+
+          {/* Column 2 */}
+          <div>
+            <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link to="/" className="text-slate-400 hover:text-white transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <a href="#about-mission" className="text-slate-400 hover:text-white transition-colors">
+                  About
+                </a>
+              </li>
+              <li>
+                <Link to="/register?role=MENTEE" className="text-slate-400 hover:text-white transition-colors">
+                  Register as Mentee &rarr;
+                </Link>
+              </li>
+              <li>
+                <Link to="/register?role=MENTOR" className="text-slate-400 hover:text-white transition-colors">
+                  Apply as Mentor &rarr;
+                </Link>
+              </li>
+              <li>
+                <Link to="/login" className="text-slate-400 hover:text-white transition-colors">
+                  Login &rarr;
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3 */}
+          <div>
+            <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Programme</h3>
+            <ul className="space-y-2 text-sm text-slate-400">
+              <li>MasterClass &mdash; 30 Hours</li>
+              <li>Self-Practice &mdash; 30 Hours</li>
+              <li>Capstone Project &mdash; 10 Hours</li>
+              <li>Certificate of Completion</li>
+              <li>Powered by Millionminds</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Academy Info */}
+        <div className="max-w-7xl mx-auto border-t border-slate-800 pt-6 text-center">
+          <p className="text-slate-600 text-xs">
+            Built with ❤️ for India's AI future &middot; Millionminds UpSkill Academy
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };

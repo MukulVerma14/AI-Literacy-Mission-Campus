@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { getMyCertificate } from '../../api/cert';
+import { getMenteeProfile } from '../../api/mentee';
 import Spinner from '../../components/Spinner';
 import Badge from '../../components/Badge';
+import millionmindsLogo from '../../assets/millionminds-logo.png';
 
 const CertPage = () => {
   const [cert, setCert] = useState(null);
+  const [cohortName, setCohortName] = useState('');
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -12,6 +15,12 @@ const CertPage = () => {
     try {
       const data = await getMyCertificate();
       setCert(data);
+      try {
+        const profile = await getMenteeProfile();
+        setCohortName(profile.cohortName || '');
+      } catch (err) {
+        console.error('Failed to fetch mentee profile:', err);
+      }
     } catch (err) {
       console.error(err);
       if (err.response && err.response.status === 404) {
@@ -96,15 +105,15 @@ const CertPage = () => {
           )}
         </div>
 
-        {/* Payment Warning Banner (hidden in print) */}
-        {!isPaid && (
-          <div className="bg-amber-50 border-l-4 border-warning rounded-r-xl p-5 shadow-sm border border-slate-150 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden">
+        {/* Payment Warning/Verified Banners (hidden in print) */}
+        {!isPaid ? (
+          <div className="bg-amber-50 border-l-4 border-amber-500 rounded-r-xl p-5 shadow-sm border border-slate-150 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <Badge status="PENDING" />
                 <span className="font-bold text-slate-800 text-sm">Processing Fee Payment Pending</span>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-650 leading-relaxed">
                 Your mentor has issued your certificate! Complete the processing fee payment of{' '}
                 <span className="font-bold text-slate-900">Rs. {cert.processingFeeAmount}</span> to activate your credential.
               </p>
@@ -113,112 +122,108 @@ const CertPage = () => {
               Contact your mentor to confirm payment
             </div>
           </div>
+        ) : (
+          <div className="bg-green-50 border-l-4 border-green-500 rounded-r-xl p-5 shadow-sm border border-slate-150 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <Badge status="PAID" />
+                <span className="font-bold text-slate-800 text-sm">Verified ✓</span>
+              </div>
+              <p className="text-xs text-slate-650 leading-relaxed">
+                Your processing fee payment of <span className="font-bold text-slate-900">Rs. {cert.processingFeeAmount}</span> has been verified! Your certificate is now active.
+              </p>
+            </div>
+          </div>
         )}
 
         {/* Certificate Display */}
-        {isPaid ? (
-          /* Premium Real-World Style Certificate design card */
-          <div className="bg-white border-8 border-double border-amber-600 rounded-3xl p-8 sm:p-16 shadow-2xl relative overflow-hidden select-none max-w-4xl mx-auto text-center font-serif text-slate-800 min-h-[500px] flex flex-col justify-between border-slate-300">
-            {/* Corner Decorative Borders */}
-            <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-amber-600 pointer-events-none" />
-            <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-amber-600 pointer-events-none" />
-            <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-amber-650 pointer-events-none" />
-            <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-amber-650 pointer-events-none" />
+        <div className="bg-white border-8 border-double border-amber-600 rounded-3xl p-8 sm:p-16 shadow-2xl relative overflow-hidden select-none max-w-4xl mx-auto text-center font-serif text-slate-800 min-h-[500px] flex flex-col justify-between border-slate-300">
+          {/* Corner Decorative Borders */}
+          <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-amber-600 pointer-events-none" />
+          <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-amber-600 pointer-events-none" />
+          <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-amber-650 pointer-events-none" />
+          <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-amber-650 pointer-events-none" />
+          
+          {/* Background seal watermark watermark */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none">
+            <span className="text-9xl">🎓</span>
+          </div>
+
+          <div className="space-y-6">
+            {/* Top Section */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 items-center gap-4 mb-6">
+              {/* Left Side: Millionminds logo */}
+              <div className="flex justify-center sm:justify-start">
+                <div className="bg-white rounded-lg p-1.5 shadow-sm border border-slate-100">
+                  <img src={millionmindsLogo} alt="Millionminds" className="h-12 w-auto" />
+                </div>
+              </div>
+              
+              {/* Center: Title & Subtitle */}
+              <div className="text-center">
+                <div className="text-xl font-bold tracking-widest text-amber-700 uppercase whitespace-nowrap">
+                  Certificate of Completion
+                </div>
+                <p className="text-slate-400 font-sans font-bold text-xs uppercase tracking-widest mt-1 whitespace-nowrap">
+                  AI Literacy Mission @ Campus (AILMC)
+                </p>
+              </div>
+
+              {/* Right Side: Spacer */}
+              <div className="hidden sm:block" />
+            </div>
             
-            {/* Background seal watermark watermark */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none">
-              <span className="text-9xl">🎓</span>
+            <div className="py-4">
+              <p className="text-sm italic text-slate-500 font-sans">This is proudly presented to</p>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 border-b border-slate-200 w-fit mx-auto px-10 py-2 italic tracking-wide">
+                {cert.menteeName && cert.menteeName.trim() !== '' && cert.menteeName !== cert.menteeEmail
+                  ? cert.menteeName
+                  : cert.menteeEmail}
+              </h2>
             </div>
 
-            <div className="space-y-6">
-              <div className="text-xl font-bold tracking-widest text-amber-700 uppercase">
-                Certificate of Completion
-              </div>
-              <p className="text-slate-400 font-sans font-bold text-xs uppercase tracking-widest">
-                AI Literacy Mission @ Campus (AILMC)
+            <div className="max-w-xl mx-auto text-sm sm:text-base leading-relaxed text-slate-650 font-sans font-medium px-4">
+              for successfully completing the rigorous 70-hour AI curriculum comprising expert-led MasterClasses (30 hours), hands-on Self-Practice labs (30 hours), and a mentor-evaluated AI Capstone implementation (10 hours).
+            </div>
+
+            {cohortName && (
+              <p className="text-xs sm:text-sm text-slate-500 italic mt-2 text-center font-sans">
+                Cohort: {cohortName}
               </p>
-              
-              <div className="py-4">
-                <p className="text-sm italic text-slate-500 font-sans">This is proudly presented to</p>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 border-b border-slate-200 w-fit mx-auto px-10 py-2 italic tracking-wide">
-                  {cert.menteeName}
-                </h2>
-                <p className="text-xs text-slate-450 mt-1 font-sans">{cert.menteeEmail}</p>
-              </div>
+            )}
+          </div>
 
-              <div className="max-w-xl mx-auto text-sm sm:text-base leading-relaxed text-slate-650 font-sans font-medium px-4">
-                for successfully completing the rigorous 70-hour AI curriculum comprising expert-led MasterClasses (30 hours), hands-on Self-Practice labs (30 hours), and a mentor-evaluated AI Capstone implementation (10 hours).
-              </div>
+          {/* Certificate Footer Meta details */}
+          <div className="border-t border-slate-200 pt-8 mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 items-center text-center font-sans">
+            {/* LEFT */}
+            <div>
+              <p className="text-xs text-amber-700 font-bold uppercase tracking-wider">DATE ISSUED</p>
+              <p className="text-sm font-semibold text-slate-800 mt-1">{issueDate}</p>
+            </div>
+            
+            {/* CENTER */}
+            <div className="space-y-1">
+              <img src={millionmindsLogo} alt="Millionminds" className="h-10 w-auto mx-auto" />
+              <p className="text-xs text-gray-400 font-medium">Powered by Millionminds</p>
             </div>
 
-            {/* Certificate Footer Meta details */}
-            <div className="border-t border-slate-100 pt-8 mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center font-sans">
-              <div>
-                <p className="text-xs text-slate-450 font-bold uppercase tracking-wider">Date issued</p>
-                <p className="text-sm font-semibold text-slate-800 mt-1">{issueDate}</p>
-              </div>
-              
-              {/* Gold seal widget */}
-              <div className="flex justify-center items-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-350 to-amber-500 border-4 border-amber-600 flex items-center justify-center shadow-lg relative transform hover:scale-105 transition-transform">
-                  <span className="text-white text-xl">✓</span>
-                  {/* Decorative ribbon edges */}
-                  <div className="absolute top-12 left-2 w-3 h-8 bg-amber-600 -rotate-12 rounded-sm -z-10" />
-                  <div className="absolute top-12 right-2 w-3 h-8 bg-amber-600 rotate-12 rounded-sm -z-10" />
-                </div>
-              </div>
-
-              <div>
-                <p className="text-xs text-slate-450 font-bold uppercase tracking-wider">Mentor Rating</p>
-                <div className="flex justify-center gap-0.5 mt-1">
-                  {Array.from({ length: cert.mentorRating || 5 }).map((_, idx) => (
-                    <span key={idx} className="text-amber-500 text-sm">★</span>
-                  ))}
-                </div>
-              </div>
+            {/* RIGHT */}
+            <div>
+              <p className="text-xs text-amber-700 font-bold uppercase tracking-wider">CERTIFICATE ID</p>
+              <p className="text-sm font-semibold text-slate-800 mt-1">AILMC-{String(cert.id).padStart(3, '0')}</p>
             </div>
           </div>
-        ) : (
-          /* Pending Payment Dashboard Display */
-          <div className="bg-white rounded-2xl p-6 sm:p-10 shadow-md border border-slate-100 space-y-6">
-            <h3 className="text-xl font-bold text-slate-900 border-b border-slate-100 pb-3">Certificate Overview</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              <div className="space-y-4">
-                <p className="flex justify-between py-2 border-b border-slate-50">
-                  <span className="font-semibold text-slate-500">Student Name:</span>
-                  <span className="text-slate-800 font-bold">{cert.menteeName}</span>
-                </p>
-                <p className="flex justify-between py-2 border-b border-slate-50">
-                  <span className="font-semibold text-slate-500">Email ID:</span>
-                  <span className="text-slate-800 font-medium">{cert.menteeEmail}</span>
-                </p>
-                <p className="flex justify-between py-2 border-b border-slate-50">
-                  <span className="font-semibold text-slate-500">Issued On:</span>
-                  <span className="text-slate-800 font-medium">{issueDate}</span>
-                </p>
-              </div>
-              <div className="space-y-4">
-                <p className="flex justify-between py-2 border-b border-slate-50">
-                  <span className="font-semibold text-slate-500">Fee Status:</span>
-                  <Badge status="PENDING" />
-                </p>
-                <p className="flex justify-between py-2 border-b border-slate-50">
-                  <span className="font-semibold text-slate-500">Processing Fee:</span>
-                  <span className="text-slate-800 font-bold">Rs. {cert.processingFeeAmount}</span>
-                </p>
-                <p className="flex justify-between py-2 border-b border-slate-50">
-                  <span className="font-semibold text-slate-500">Capstone Status:</span>
-                  <span className="text-success font-semibold">Completed ✓</span>
-                </p>
-              </div>
-            </div>
-            
-            <div className="bg-slate-50 p-6 rounded-xl border border-slate-100 text-center space-y-3">
-              <h4 className="font-bold text-slate-850">How to activate your certificate?</h4>
-              <p className="text-xs text-slate-500 leading-relaxed max-w-lg mx-auto">
-                Once the payment of Rs. {cert.processingFeeAmount} is completed, your mentor will coordinate with the system administrator. As soon as the administrator verifies the payment status, your certificate will automatically activate and become available for download and printing.
-              </p>
-            </div>
+        </div>
+
+        {/* Download / Print button below certificate */}
+        {isPaid && (
+          <div className="flex justify-center mt-6 print:hidden">
+            <button
+              onClick={handlePrint}
+              className="px-6 py-3 rounded-lg text-sm font-bold bg-slate-800 text-white hover:bg-slate-700 transition-colors shadow-md flex items-center gap-2"
+            >
+              🖨️ Print / Download PDF
+            </button>
           </div>
         )}
 
