@@ -66,7 +66,7 @@ public class SecurityConfig {
         // Allow React dev servers
         config.setAllowedOrigins(List.of(
                 "http://localhost:3000",
-                "http://localhost:5173"
+                "http://localhost:5173",
                 "https://ai-literacy-mission-campus.vercel.app"
         ));
         config.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
