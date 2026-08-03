@@ -16,21 +16,21 @@ const Landing = () => {
       title: 'MasterClass',
       hours: '30 hours',
       color: 'border-track-blue text-track-blue bg-blue-50/50',
-      description: 'Expert-led sessions introducing fundamental and advanced generative AI concepts, LLMs, prompting, and deployment architectures.',
+      description: '20 live in-person sessions of 90 minutes each. Hands-on learning with GenAI tools, Prompt Engineering, and real-life use cases. Conducted by GenZ tech mentors.',
       badgeColor: 'bg-primary text-white'
     },
     {
       title: 'Self-Practice',
       hours: '30 hours',
       color: 'border-track-green text-track-green bg-green-50/50',
-      description: 'Hands-on practice labs, writing custom agents, interacting with APIs, and fine-tuning prompt templates on local systems.',
+      description: 'Structured self-practice assignments covering Prompt Engineering, Productivity Enhancement, Creativity Tools, and Work-life Application scenarios.',
       badgeColor: 'bg-success text-white'
     },
     {
       title: 'Capstone',
       hours: '10 hours',
       color: 'border-track-orange text-track-orange bg-orange-50/50',
-      description: 'Build a production-grade AI application addressing a real-world problem and demo it to your cohort peer group.',
+      description: 'A comprehensive all-encompassing project to review and demonstrate your overall AI learning. Your proof of becoming AI-native.',
       badgeColor: 'bg-track-orange text-white'
     }
   ];
@@ -138,26 +138,31 @@ const Landing = () => {
                 OUR MISSION
               </span>
               <h2 className="text-3xl font-bold text-slate-900 mb-6">
-                Training One Million GenZ Students in AI
+                Training One Million GenZ Students in AI — Free of Cost
               </h2>
               <div className="space-y-4 text-slate-600 leading-relaxed text-sm sm:text-base">
                 <p>
-                  The early adoption of AI skills enables individuals to explore 
+                  Early adoption of AI skills enables individuals to explore 
                   AI-driven new jobs while remaining relevant in their existing 
                   vocations. As an emerging and fast-growing economy, India needs 
-                  AI training at a much larger scale — all pervasive, wherever 
-                  the impact of AI is going to be greater.
+                  AI training at a much larger scale — all pervasive, wherever the 
+                  impact of AI is going to be greater. Learning programmes need to 
+                  be unleashed to train citizens at mass scale to become true 
+                  AI natives.
                 </p>
                 <p>
                   Our vision is to train One Million GenZ students and young 
-                  working professionals across India in the Fundamentals of AI 
-                  and the working knowledge of Gen AI tools for real-life 
-                  productivity enhancement — free of cost.
+                  Indian working professionals about the Fundamentals of AI and 
+                  the working knowledge of Gen AI tools for real-life productivity 
+                  enhancement — completely free of cost.
                 </p>
                 <p>
                   The initial pilot has 50 mentors training 500 individuals. 
-                  Over 3 years, we will scale to 5,000 mentors covering 100+ 
-                  cities, with capacity to train 2.5 lakh mentees per annum.
+                  Over a 3-year horizon, the mentor collective will grow to 5,000 
+                  mentors covering 100+ cities, with capacity to train 2.5 lakh 
+                  mentees per annum. Mentors are young, tech-savvy GenZ students 
+                  from engineering colleges who voluntarily train people from all 
+                  walks of life.
                 </p>
               </div>
             </div>
@@ -177,8 +182,8 @@ const Landing = () => {
                 <div className="text-xs sm:text-sm text-slate-500 font-medium">Cities Covered</div>
               </div>
               <div className="bg-slate-50 rounded-xl p-6 text-center border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">70 Hours</div>
-                <div className="text-xs sm:text-sm text-slate-500 font-medium">Per Programme</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">Free</div>
+                <div className="text-xs sm:text-sm text-slate-500 font-medium">Cost to Learners</div>
               </div>
             </div>
           </div>
@@ -272,62 +277,62 @@ const Landing = () => {
               What You Will Learn
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              A hands-on curriculum built for the real AI world.
+              A 30-hour hands-on Master Class programme supplemented by 30 hours of Self-Practice and a 10-hour Capstone Project — structured for real-life AI application.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Card 1 */}
             <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-3">⚡</div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Prompt Engineering</h3>
+              <div className="text-3xl mb-3">🤖</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">AI Fundamentals</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Master the art of communicating with AI. Learn to craft prompts that get real, production-grade results.
+                Understand the current AI landscape, its impact on daily life in 2026 and beyond — personal, professional, and societal. Learn why and how to start using AI tools to derive real benefits.
               </p>
             </div>
 
             {/* Card 2 */}
             <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-3">🤖</div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">AI Agents & Applications</h3>
+              <div className="text-3xl mb-3">🛠️</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Getting Started with AI Tools</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Build and deploy AI agents. Understand how autonomous systems work and apply them to real tasks.
+                Discover and download the most useful GenAI tools. Understand paid vs free versions, key features, and which tools match your specific needs and interest areas.
               </p>
             </div>
 
             {/* Card 3 */}
             <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-3">🐍</div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Python & Data Science</h3>
+              <div className="text-3xl mb-3">✍️</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Prompt Engineering</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Fundamentals of Python, ML, and data analysis — the building blocks of every AI application.
+                Master the Art & Science of Prompt Engineering. Learn to craft prompts that generate faster, more productive, and accurate responses from AI systems.
               </p>
             </div>
 
             {/* Card 4 */}
             <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
               <div className="text-3xl mb-3">💻</div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Vibe Coding & No-Code AI</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Hands-on GenAI Tool Practice</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Build AI-powered apps without deep coding knowledge. Use no-code and low-code tools for rapid prototyping.
+                Deep-dive into 5 GenAI tools over 10 dedicated sessions. Build a real-life use case library with your own data across productivity, creativity, and work situations.
               </p>
             </div>
 
             {/* Card 5 */}
             <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-3">🧬</div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">LLMs & GenAI Tools</h3>
+              <div className="text-3xl mb-3">📊</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Self-Practice Assignments (30 hrs)</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Understand Large Language Models. Get hands-on with ChatGPT, Gemini, Claude, and emerging AI tools.
+                Reinforce learning through structured self-practice: Prompt Engineering (5 hrs), Productivity Enhancement (5 hrs), Creativity Tools (5 hrs), and Work-life Applications (15 hrs).
               </p>
             </div>
 
             {/* Card 6 */}
             <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-3">🛡️</div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">AI Ethics & Digital Safety</h3>
+              <div className="text-3xl mb-3">🏆</div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Capstone Project (10 hrs)</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Navigate AI responsibly. Learn AI ethics, data privacy, and digital security in the age of GenAI.
+                A comprehensive final assignment reviewing your overall learning journey. Track your AI impact and plan your continued growth beyond the programme.
               </p>
             </div>
           </div>
